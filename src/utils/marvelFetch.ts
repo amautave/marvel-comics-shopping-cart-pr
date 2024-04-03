@@ -1,6 +1,6 @@
 import md5 from 'md5';
 
-function fetchMarvelComics(partialUrl, options = {}) {
+function fetchMarvelComics(partialUrl: string, options) {
 	const privateKey = process.env.PRIVATE_KEY;
 	const publicKey = process.env.PUBLIC_KEY;
 	  const timestamp = Number(new Date());
@@ -18,6 +18,6 @@ function fetchMarvelComics(partialUrl, options = {}) {
   return fetch(url.toString());
 }
 
-export default function marvelFetch(partialUrl, options) {
+export default function marvelFetch(partialUrl, options = {}) {
 return fetchMarvelComics(partialUrl, options);
 }
