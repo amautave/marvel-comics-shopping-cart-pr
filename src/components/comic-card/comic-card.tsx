@@ -1,0 +1,26 @@
+import Image from "next/image";
+
+interface ComicCadProps {
+  src: string;
+  alt: string;
+  name: string;
+}
+
+export function ComicCard({ src, alt, name }: ComicCadProps) {
+  return (
+    <div className="relative h-[310px] w-[200px]">
+      <Image
+        src={src}
+        alt={alt}
+        width={200}
+        height={200}
+        className="absolute"
+      />
+      <div className="absolute z-20 bg-black opacity-0 hover:opacity-90 h-full w-full">
+        <span className="absolute text-white bottom-[40px] left-[15px] text-2xl">
+          {name}
+        </span>
+      </div>
+    </div>
+  );
+}
