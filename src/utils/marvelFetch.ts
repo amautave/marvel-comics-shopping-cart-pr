@@ -4,7 +4,8 @@ export interface FetchComicsOptionsI {
   limit?: number;
 }
 
-function fetchMarvelComics(partialUrl: string, options: FetchComicsOptionsI) {
+// TODO: Improve options typing, remove FetchComicsOptionsI, something more general
+function fetchMarvel(partialUrl: string, options: FetchComicsOptionsI) {
   const privateKey = process.env.PRIVATE_KEY || "";
   const publicKey = process.env.PUBLIC_KEY || "";
   const timestamp = Number(new Date());
@@ -32,5 +33,6 @@ export default function marvelFetch(
   partialUrl: string,
   options: FetchComicsOptionsI = {}
 ) {
-  return fetchMarvelComics(partialUrl, options);
+  // TODO: Validate if we can return response.data.results
+  return fetchMarvel(partialUrl, options);
 }

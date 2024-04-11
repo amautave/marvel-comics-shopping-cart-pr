@@ -18,6 +18,8 @@ export const getServerSideProps = (async () => {
 
   // Pass data to the page via props
   return { props: { comics: comicsJson.data.results } };
+
+  // TODO: Handle API errors 400, 500
 }) satisfies GetServerSideProps<{ comics: ComicI[] }>;
 
 export default function Page({
