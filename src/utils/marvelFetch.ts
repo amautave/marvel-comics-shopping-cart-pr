@@ -1,10 +1,10 @@
 import md5 from "md5";
 
-export interface fetchComicsOptionsI {
+export interface FetchComicsOptionsI {
   limit?: number;
 }
 
-function fetchMarvelComics(partialUrl: string, options: fetchComicsOptionsI) {
+function fetchMarvelComics(partialUrl: string, options: FetchComicsOptionsI) {
   const privateKey = process.env.PRIVATE_KEY || "";
   const publicKey = process.env.PUBLIC_KEY || "";
   const timestamp = Number(new Date());
@@ -17,18 +17,20 @@ function fetchMarvelComics(partialUrl: string, options: fetchComicsOptionsI) {
   };
 
   const url = new URL(`${process.env.URL}/${partialUrl}`);
-  if (defaults) {
-    url.search = new URLSearchParams(
-      { ...defaults, ...options }.toString()
-    ).toString();
-  }
+
+  const searchOptions = { ...defaults, ...options };
+
+  // TODO: Improve typing for searchOptions
+  url.search = new URLSearchParams(searchOptions as unknown as Record<string, string>).toString();
+
+  console.log({ url: url.toString() });
 
   return fetch(url.toString());
 }
 
 export default function marvelFetch(
   partialUrl: string,
-  options: fetchComicsOptionsI = {}
+  options: FetchComicsOptionsI = {}
 ) {
   return fetchMarvelComics(partialUrl, options);
 }
