@@ -3,7 +3,7 @@ import marvelFetch from "@/utils/marvelFetch";
 import Image from "next/image";
 import { ComicI } from "../../interfaces/comics";
 import Navbar from "@/components/navbar/navbar";
-import { comics as comiics } from "@/mock/comic";
+import { comics as comiics } from "@/mock/comic.mock";
 import { ComicCard } from "@/components/comic-card/comic-card";
 
 type Comic = {
@@ -24,7 +24,7 @@ export default function Page({
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
   const comic = comiics[0];
   return (
-    <main className="grid grid-cols-5 ml-[150px]  justify-evenly gap-y-12 mt-[100px]">
+    <main className="grid grid-cols-5 ml-[150px] mb-[100px] gap-10 gap-y-12 mt-[100px]">
       {comiics.map((comic) => (
         <ComicCard
           key={comic.id}

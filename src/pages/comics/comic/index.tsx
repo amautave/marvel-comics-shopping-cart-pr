@@ -3,7 +3,7 @@ import marvelFetch from "@/utils/marvelFetch";
 import Image from "next/image";
 import Navbar from "@/components/navbar/navbar";
 import { ComicI } from "@/interfaces/comics";
-import { comics as comiics } from "@/mock/comic";
+import { comics as comiics } from "@/mock/comic.mock";
 
 type Comic = {
   // TODO Define type
