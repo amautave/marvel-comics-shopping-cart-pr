@@ -59,7 +59,7 @@ const comic: ComicI = {
   },
 };
 
-export const comics: ComicI[] = [
+export const comicsMock: ComicI[] = [
   comic,
   comic,
   comic,
