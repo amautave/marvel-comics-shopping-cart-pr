@@ -1,6 +1,6 @@
-import { ComicI } from "@/interfaces/comics";
+import { IComic } from "@/interfaces/comics";
 
-const comic: ComicI = {
+const comic: IComic = {
   id: 82967,
   images: [
     {
@@ -59,7 +59,7 @@ const comic: ComicI = {
   },
 };
 
-export const comics: ComicI[] = [
+export const comics: IComic[] = [
   comic,
   comic,
   comic,

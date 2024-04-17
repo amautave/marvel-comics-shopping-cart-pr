@@ -1,22 +1,17 @@
 import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
-import marvelFetch from "@/utils/marvelFetch";
+import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
 import Image from "next/image";
-import Navbar from "@/components/navbar/navbar";
-import { ComicI } from "@/interfaces/comics";
-import { comics as comiics } from "@/mock/comic";
-
-type Comic = {
-  // TODO Define type
-};
+import { IComic } from "@/interfaces/comics";
 
 export const getServerSideProps = (async (context: any) => {
   // Fetch data from external API
-  const res = await marvelFetch(`comics/${context.params.id}`);
-  const comicJson: any = await res.json();
+  const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
+    `comics/${context.params.id}`,
+  );
 
   // Pass data to the page via props
-  return { props: { comic: comicJson.data.results[0] } };
-}) satisfies GetServerSideProps<{ comic: any }>;
+  return { props: { comic: comicRes.data.results[0] } };
+}) satisfies GetServerSideProps<{ comic: IComic }>;
 
 export default function Page({
   comic,

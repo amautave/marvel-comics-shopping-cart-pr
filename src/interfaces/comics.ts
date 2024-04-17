@@ -36,7 +36,7 @@ interface IComicDate {
   date: string;
 }
 
-export interface ComicI {
+export interface IComic {
   id: number;
   title: string;
   prices: IComicPrice[];
