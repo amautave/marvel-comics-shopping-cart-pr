@@ -1,9 +1,9 @@
-import { ComicI } from "@/interfaces/comics";
+import { IComic } from "@/interfaces/comics";
 import { createContext, useState } from "react";
 
 interface ContextI {
-  addCartItem: (comic: ComicI) => void;
-  getCartItems: () => ComicI[];
+  addCartItem: (comic: IComic) => void;
+  getCartItems: () => IComic[];
 }
 
 interface ContextProps {
@@ -13,14 +13,14 @@ interface ContextProps {
 export const Context = createContext<any>(null);
 
 export function ContextProvider({ children }: ContextProps) {
-  const [comics, setComics] = useState<ComicI[]>([]);
+  const [comics, setComics] = useState<IComic[]>([]);
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(false);
 
-  function addCartItem(comic: ComicI) {
+  function addCartItem(comic: IComic) {
     const inCartComic = comics.find((cartComic) => cartComic.id === comic.id);
     if (!inCartComic) setComics([...comics, comic]);
   }
-  function getCartItems(): ComicI[] {
+  function getCartItems(): IComic[] {
     return structuredClone(comics);
   }
 

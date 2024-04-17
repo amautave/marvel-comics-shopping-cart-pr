@@ -1,7 +1,7 @@
 import { useContext } from "react";
 import { CartItem } from "../cart-item/cart-item";
 import { Context } from "@/utils/context";
-import { ComicI } from "@/interfaces/comics";
+import { IComic } from "@/interfaces/comics";
 
 interface SidebarProps {
   isVisible: boolean;
@@ -12,7 +12,7 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
   const context = useContext(Context);
   const items = context.getCartItems();
 
-  async function buyItems(items: ComicI[]) {
+  async function buyItems(items: IComic[]) {
     const itemsIds = items.map((item) => item.id.toString());
     const rawResponse = await fetch("http://localhost:3000/api/my-purchases/", {
       method: "POST",
@@ -65,7 +65,7 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
         Cart
       </h5>
       <div className="py-4 overflow-y-auto flex flex-col gap-10 h-[80%] pr-3">
-        {items.map((cartComic: ComicI) => (
+        {items.map((cartComic: IComic) => (
           <CartItem
             src={cartComic.thumbnail.path + "." + cartComic.thumbnail.extension}
             author={
@@ -91,7 +91,7 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
           <span>
             $
             {items.reduce(
-              (acc: number, item: ComicI) =>
+              (acc: number, item: IComic) =>
                 item.prices ? acc + item.prices[0].price || 0 : acc,
               0
             )}

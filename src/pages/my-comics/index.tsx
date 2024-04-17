@@ -1,5 +1,5 @@
 import { ComicCard } from "@/components/comic-card/comic-card";
-import { ComicI } from "@/interfaces/comics";
+import { IComic } from "@/interfaces/comics";
 import marvelFetch from "@/utils/marvelFetch";
 
 interface SavedComic {
@@ -11,9 +11,8 @@ export async function getServerSideProps() {
   const savedComicsIdsRes = await fetch(
     "http://localhost:3000/api/my-purchases"
   );
-  const comicsRes = await marvelFetch("comics");
-  const comicJson: any = await comicsRes.json();
-  const comics: ComicI[] = comicJson.data.results;
+  const comicsRes = await marvelFetch<IComic>("comics");
+  const comics: IComic[] = comicsRes.data.results;
   const savedComicsResponse = await savedComicsIdsRes.json();
   const savedComics: SavedComic[] = savedComicsResponse.data.comics;
   const purchases = savedComics.map((savedComic) =>
@@ -22,12 +21,12 @@ export async function getServerSideProps() {
   return { props: { comics: purchases } };
 }
 
-export default function PurchasedComics({ comics }: { comics: ComicI[] }) {
+export default function PurchasedComics({ comics }: { comics: IComic[] }) {
   return (
     <main className="grid grid-cols-5 ml-[150px]  justify-evenly gap-y-12 mt-[100px]">
       {comics
         .filter((comic) => comic.images && comic.images[0])
-        .map((comic: ComicI) => (
+        .map((comic: IComic) => (
           <ComicCard
             key={comic.id}
             id={comic.id}
