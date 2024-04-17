@@ -11,10 +11,26 @@ interface SidebarProps {
 export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
   const context = useContext(Context);
   const items = context.getCartItems();
+
+  async function buyItems(items: ComicI[]) {
+    const itemsIds = items.map((item) => item.id.toString());
+    const rawResponse = await fetch("http://localhost:3000/api/my-purchases/", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ ids: itemsIds }),
+    });
+
+    if (rawResponse.status === 200) {
+      context.deleteCartItems();
+    }
+  }
   return (
     <div
       id="drawer-navigation"
-      className={`fixed top-0 right-0 z-40 w-[22vw] h-full pl-8 pr-5 pt-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 h-full ${
+      className={`fixed top-0 right-0 z-20 w-[22vw] h-full pl-8 pr-5 pt-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 h-full ${
         !isVisible ? "translate-x-[22vw]" : ""
       }`}
       // tabindex="-1"
@@ -37,7 +53,7 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
           <path
             fillRule="evenodd"
             d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-            clip-rule="evenodd"
+            clipRule="evenodd"
           ></path>
         </svg>
         <span className="sr-only">Close menu</span>
@@ -81,7 +97,13 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
             )}
           </span>
         </div>
-        <button className="bg-black text-white w-full h-[50px] ">Buy</button>
+        <button
+          className="bg-black text-white w-full h-[50px] disabled:bg-gray-500"
+          disabled={items.length < 1}
+          onClick={() => buyItems(items)}
+        >
+          Buy
+        </button>
       </div>
     </div>
   );

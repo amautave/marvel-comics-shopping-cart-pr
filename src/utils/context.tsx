@@ -15,6 +15,7 @@ export const Context = createContext<any>(null);
 export function ContextProvider({ children }: ContextProps) {
   const [comics, setComics] = useState<ComicI[]>([]);
   const [isSidebarVisible, setIsSidebarVisible] = useState<boolean>(false);
+
   function addCartItem(comic: ComicI) {
     const inCartComic = comics.find((cartComic) => cartComic.id === comic.id);
     if (!inCartComic) setComics([...comics, comic]);
@@ -26,6 +27,10 @@ export function ContextProvider({ children }: ContextProps) {
   function removeItemFromCart(comicId: number) {
     const newComics = comics.filter((comic) => comic.id !== comicId);
     setComics(newComics);
+  }
+
+  function deleteCartItems() {
+    setComics([]);
   }
 
   function toggleSidebarVisibility() {
@@ -45,6 +50,7 @@ export function ContextProvider({ children }: ContextProps) {
       value={{
         addCartItem,
         getCartItems,
+        deleteCartItems,
         removeItemFromCart,
         toggleSidebarVisibility,
         getSidebarVisibility,

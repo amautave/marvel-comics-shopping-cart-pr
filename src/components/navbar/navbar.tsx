@@ -1,12 +1,14 @@
 import Image from "next/image";
 import { CartIcon } from "../icons/cart";
 import { Sidebar } from "../sidebar/sidebar";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import Link from "next/link";
 import { Context } from "@/utils/context";
+import { useRouter } from "next/router";
 
 export default function Navbar() {
   const context = useContext(Context);
+  const router = useRouter();
   return (
     <>
       <Sidebar
@@ -16,21 +18,32 @@ export default function Navbar() {
       <nav className="flex h-16 mt-[80px] w-screen items-center justify-between">
         <div className=" ml-[150px] mr-[150px] flex items-center w-screen justify-between">
           <div className="flex items-center space-x-[150px]">
-            <Image width={100} height={10} src="/marvel-logo.png" alt="logo" />
+            <Link href={"/comics"}>
+              <Image
+                width={100}
+                height={10}
+                src="/marvel-logo.png"
+                alt="logo"
+              />
+            </Link>
             <div className="space-x-8 tex-lg">
               <Link
-                className="bg-gray-900 text-white rounded-md px-3 py-2  font-medium"
+                className={`${
+                  router.pathname.includes("/comics") && "bg-gray-900"
+                } text-white rounded-md px-3 py-2 font-medium`}
                 aria-current="page"
-                href={"/comics"}
+                href="/comics"
               >
                 Comics
               </Link>
-              <a
-                href="#"
-                className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2  font-medium"
+              <Link
+                href="/my-comics"
+                className={`${
+                  router.pathname === "/my-comics" && "bg-gray-900"
+                } text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium`}
               >
                 My comics
-              </a>
+              </Link>
             </div>
           </div>
           <div

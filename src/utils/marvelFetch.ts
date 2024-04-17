@@ -22,9 +22,11 @@ function fetchMarvel(partialUrl: string, options: FetchComicsOptionsI) {
   const searchOptions = { ...defaults, ...options };
 
   // TODO: Improve typing for searchOptions
-  url.search = new URLSearchParams(searchOptions as unknown as Record<string, string>).toString();
+  url.search = new URLSearchParams(
+    searchOptions as unknown as Record<string, string>
+  ).toString();
 
-  console.log({ url: url.toString() });
+  // console.log({ url: url.toString() });
 
   return fetch(url.toString());
 }
