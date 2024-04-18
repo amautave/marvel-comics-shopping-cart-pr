@@ -2,6 +2,9 @@ import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
+import { IComic } from "@/interfaces/comics";
+import { useContext } from "react";
+import { Context } from "@/utils/context";
 
 export const getServerSideProps = (async (context: any) => {
   // Fetch data from external API
@@ -13,33 +16,56 @@ export const getServerSideProps = (async (context: any) => {
   return { props: { comic: comicRes.data.results[0] } };
 }) satisfies GetServerSideProps<{ comic: IComic }>;
 
-export default function Page({
-  comic,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+export default function Page({ comic }: { comic: IComic }) {
+  const context = useContext(Context);
+
+  function addComicToCart(comic: IComic) {
+    context.addCartItem(comic);
+    context.setSidebarVisibility(true);
+  }
+
   return (
-    <main className="absolute bottom-[120px] right-0 left-0">
-      <div className="h-max flex items-end justify-between ml-[150px] mr-[150px] grow ">
-        <div className="h-[100%] text-white flex flex-col gap-10 max-w-[800px] items-start max-w-[700px] pb-[30px]">
-          <h1 className="font-bold text-7xl">{comic.title}</h1>
-          <div>
-            {comic.creators.items.map((creator) => (
+    <main className="">
+      <div className="flex items-end justify-between ml-[150px] mr-[150px] grow h-[600px] mt-[150px]">
+        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between max-w-[700px]">
+          <h1 className="font-bold text-6xl max-w-[700px]">{comic.title}</h1>
+          <div className="text-sm text-gray-400">
+            {comic.creators?.items.map((creator) => (
               <span key={creator.name}>- {creator.name}</span>
             ))}
           </div>
 
-          <div className="mt-[30px] mb-[100px] text-lg">
-            {comic.textObjects[0].text}
+          <div className="mt-[30px] mb-[50px] text-lg text-justify">
+            {comic.textObjects &&
+              comic.textObjects.length > 0 &&
+              comic.textObjects[0].text}
           </div>
-          <div className="text-5xl self-end">${comic.prices[0].price}</div>
+          <span className="text-5xl">
+            ${comic.prices && comic.prices[0].price}
+          </span>
+          <div className="flex flex-col  self-end gap-y-[20px]">
+            <button
+              className="w-[200px] h-[50px] bg-white text-black hover:bg-gray-200"
+              onClick={() => addComicToCart(comic)}
+            >
+              Add to cart
+            </button>
+          </div>
         </div>
 
-        <Image
-          className="min-w-[400px]"
-          src={`${comic.images[0]?.path + "." + comic.images[0]?.extension}`}
-          alt={`${comic.title} comic image`}
-          width={450}
-          height={100}
-        ></Image>
+        <div className="w-fit">
+          {comic.images && (
+            <Image
+              className="w-[450px]"
+              src={`${
+                comic.images[0]?.path + "." + comic.images[0]?.extension
+              }`}
+              alt={`${comic.title} comic image`}
+              width={450}
+              height={100}
+            ></Image>
+          )}
+        </div>
       </div>
     </main>
   );

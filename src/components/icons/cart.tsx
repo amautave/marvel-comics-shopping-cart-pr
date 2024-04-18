@@ -1,10 +1,10 @@
-interface CartProps {
+interface CartIconProps {
   height?: number;
   width?: number;
   className?: string;
 }
 
-export function Cart({ height, width, className }: CartProps) {
+export function CartIcon({ height, width, className }: CartIconProps) {
   return (
     <div className={className}>
       <svg

@@ -7,6 +7,7 @@ export default function Document() {
       <body className="bg-[url('/background.png')] h-full m-0 p-0">
         <Main />
         <NextScript />
+        <script src="../path/to/flowbite/dist/flowbite.min.js"></script>
       </body>
     </Html>
   );
