@@ -1,7 +1,7 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
-import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
-import Image from "next/image";
 import { IComic } from "@/interfaces/comics";
+import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import Image from "next/image";
 
 export const getServerSideProps = (async (context: any) => {
   // Fetch data from external API

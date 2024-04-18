@@ -23,7 +23,6 @@ export interface FetchOptionsI {
   [key: string]: unknown;
 }
 
-// TODO: Improve options typing, remove FetchComicsOptionsI, something more general
 function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
   const privateKey = process.env.PRIVATE_KEY || "";
   const publicKey = process.env.PUBLIC_KEY || "";
@@ -51,7 +50,6 @@ export default async function marvelFetch<T>(
   partialUrl: string,
   options: FetchOptionsI = {},
 ): Promise<MarvelApiResponse<T>> {
-  // TODO: Validate if we can return response.data.results
   return fetchMarvelAPI(partialUrl, options)
     .then((response) => response.json())
     .then((jsonResponse: any) => {

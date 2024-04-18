@@ -1,7 +1,7 @@
-import type { InferGetServerSidePropsType, GetServerSideProps } from "next";
 import { ComicCard } from "@/components/comic-card/comic-card";
 import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
+import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = (async () => {
   const comicsRes: MarvelApiResponse<IComic> =
