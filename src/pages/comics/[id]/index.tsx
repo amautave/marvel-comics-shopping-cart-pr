@@ -1,10 +1,9 @@
 import { IComic } from "@/interfaces/comics";
-import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
-import Image from "next/image";
-import { IComic } from "@/interfaces/comics";
-import { useContext } from "react";
 import { Context } from "@/utils/context";
+import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
+import type { GetServerSideProps } from "next";
+import Image from "next/image";
+import { useContext } from "react";
 
 export const getServerSideProps = (async (context: any) => {
   // Fetch data from external API
