@@ -38,17 +38,17 @@ function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
   const searchOptions: FetchOptionsI = { ...defaults, ...options };
 
   url.search = new URLSearchParams(
-    searchOptions as Record<string, string>
+    searchOptions as Record<string, string>,
   ).toString();
 
-  console.log({ url: url.toString() });
+  // console.log({ url: url.toString() });
 
   return fetch(url.toString());
 }
 
 export default async function marvelFetch<T>(
   partialUrl: string,
-  options: FetchOptionsI = {}
+  options: FetchOptionsI = {},
 ): Promise<MarvelApiResponse<T>> {
   return fetchMarvelAPI(partialUrl, options)
     .then((response) => response.json())

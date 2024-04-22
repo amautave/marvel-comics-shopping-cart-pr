@@ -5,7 +5,12 @@ import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = (async () => {
   const comicsRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-    "comics"
+    "comics",
+    {
+      // titleStartsWith: "Ant-Man",
+      // startYear: 2024,
+      dateDescriptor: "thisMonth",
+    },
   );
 
   // Pass data to the page via props

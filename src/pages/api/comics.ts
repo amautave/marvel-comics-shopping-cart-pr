@@ -1,18 +1,14 @@
 // Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+import { IComic } from "@/interfaces/comics";
+import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
 import type { NextApiRequest, NextApiResponse } from "next";
-import marvelFetch from "@/utils/marvelFetch";
-
-type Data = {
-  comics: any[];
-};
 
 export default async function handler(
-  req: NextApiRequest,
-  res: NextApiResponse<Data>,
+  _req: NextApiRequest,
+  res: NextApiResponse<MarvelApiResponse<IComic>>,
 ) {
-  const comicsRes = await marvelFetch('comics');
-  const comics = await comicsRes.json();
+  const comicsRes: MarvelApiResponse<IComic> =
+    await marvelFetch<IComic>("comics");
 
-  res.status(200).json({ comics });
+  res.status(200).json(comicsRes);
 }
-

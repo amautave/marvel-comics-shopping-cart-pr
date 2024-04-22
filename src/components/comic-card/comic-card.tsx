@@ -10,7 +10,7 @@ interface ComicCadProps {
 
 export function ComicCard({ id, src, alt, name }: ComicCadProps) {
   return (
-    <Link href={`/comics/${id}`}>
+    <Link href={`/comics/${id}/static`}>
       <div className="relative h-[310px] w-[200px]">
         <Image
           src={src}
