@@ -55,7 +55,10 @@ export const getStaticProps = (async (context: any) => {
   }
 
   // Pass data to the page via props
-  return { props: { comic }, revalidate: 10 };
+  return {
+    props: { comic },
+    // revalidate: 10
+  };
 }) satisfies GetStaticProps<{ comic: IComic }>;
 
 export default function Page({
