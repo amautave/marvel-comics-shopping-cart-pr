@@ -1,34 +1,48 @@
 import { IComic } from "@/interfaces/comics";
 import { Context } from "@/utils/context";
 import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
-import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
-import { useContext } from "react";
+import { useContext, useEffect, useState } from "react";
+import { Loader } from "../loader/loader";
 
-export const getServerSideProps = (async (context: any) => {
-  // Fetch data from external API
-  const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-    `comics/${context.params.id}`,
-  );
-
-  // Pass data to the page via props
-  return { props: { comic: comicRes.data.results[0] } };
-}) satisfies GetServerSideProps<{ comic: IComic }>;
-
-export default function Page({
-  comic,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
+interface ComicViewProps {
+  id: number;
+}
+export default function ComicView({ id }: ComicViewProps) {
+  console.log({ id });
+  const [comic, setComic] = useState<IComic>();
   const context = useContext(Context);
 
-  function addComicToCart(comic: IComic) {
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch data from external API
+      const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
+        `comics/${id}`,
+      );
+      const comic = comicRes.data.results[0];
+      setComic(comic);
+    };
+
+    fetchData().catch((e) => {
+      console.log("error getting comic", e);
+    });
+  }, [id]);
+
+  const addComicToCart = (comic: IComic) => {
     context.addCartItem(comic);
     context.setSidebarVisibility(true);
+  };
+
+  console.log({ comic });
+
+  if (!comic) {
+    return <Loader />;
   }
 
   return (
     <main className="">
       <div className="flex items-end justify-between ml-[150px] mr-[150px] grow h-[600px] mt-[150px]">
-        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between max-w-[700px]">
+        <div className="text-white flex flex-col gap-10 self-center h-full items-start justify-between max-w-[700px]">
           <h1 className="font-bold text-6xl max-w-[700px]">{comic.title}</h1>
           <div className="text-sm text-gray-400">
             {comic.creators?.items.map((creator) => (

@@ -21,13 +21,20 @@ export function ComicCard({ id, src, alt, name }: ComicCadProps) {
       <div className="absolute z-10 bg-black opacity-0 hover:opacity-90 h-full w-full">
         <div className="absolute top-0 w-full p-4 flex justify-around">
           <Link
-            className="font-medium text-white dark:text-blue-500 hover:underline"
+            className="font-medium text-sm text-white dark:text-blue-500 hover:underline"
             href={`/comics/${id}/static`}
           >
             Go SSG
           </Link>
           <Link
-            className="font-medium text-white dark:text-blue-500 hover:underline"
+            className="font-medium text-sm text-white dark:text-blue-500 hover:underline"
+            href={`/comics/${id}/client`}
+            prefetch={false}
+          >
+            Go CSR
+          </Link>
+          <Link
+            className="font-medium text-sm text-white dark:text-blue-500 hover:underline"
             href={`/comics/${id}`}
           >
             Go SSR

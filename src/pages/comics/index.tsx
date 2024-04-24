@@ -19,10 +19,11 @@ export const getServerSideProps = (async () => {
   // TODO: Handle API errors 400, 500
 }) satisfies GetServerSideProps<{ comics: IComic[] }>;
 
-export default function Page({ comics }: { comics: IComic[] }) {
+export default function Page({
+  comics,
+}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <main className="grid grid-cols-5 ml-[150px]  justify-evenly gap-y-12 mt-[100px]">
-      {/* <pre className="text-white">{JSON.stringify(comics[0], null, 2)}</pre> */}
       {comics
         .filter((comic) => comic.images && comic.images[0])
         .map((comic: IComic) => (

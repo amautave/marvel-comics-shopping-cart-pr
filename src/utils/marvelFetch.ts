@@ -24,8 +24,16 @@ export interface FetchOptionsI {
 }
 
 function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
-  const privateKey = process.env.PRIVATE_KEY || "";
-  const publicKey = process.env.PUBLIC_KEY || "";
+  console.log("processEnv", process.env);
+  const clientSide = typeof window != "undefined";
+  const privateKey =
+    (clientSide
+      ? process.env.NEXT_PUBLIC_PRIVATE_KEY
+      : process.env.PRIVATE_KEY) || "";
+  const publicKey =
+    (clientSide
+      ? process.env.NEXT_PUBLIC_PUBLIC_KEY
+      : process.env.PUBLIC_KEY) || "";
   const timestamp = Number(new Date());
   const hash = md5(timestamp + privateKey + publicKey);
 
@@ -50,6 +58,7 @@ export default async function marvelFetch<T>(
   partialUrl: string,
   options: FetchOptionsI = {},
 ): Promise<MarvelApiResponse<T>> {
+  console.log("marvelFetch", { partialUrl, options });
   return fetchMarvelAPI(partialUrl, options)
     .then((response) => response.json())
     .then((jsonResponse: any) => {
