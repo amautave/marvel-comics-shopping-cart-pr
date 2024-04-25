@@ -9,7 +9,6 @@ interface ComicViewProps {
   id: number;
 }
 export default function ComicView({ id }: ComicViewProps) {
-  console.log({ id });
   const [comic, setComic] = useState<IComic>();
   const context = useContext(Context);
 
@@ -17,7 +16,7 @@ export default function ComicView({ id }: ComicViewProps) {
     const fetchData = async () => {
       // Fetch data from external API
       const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-        `comics/${id}`,
+        `comics/${id}`
       );
       const comic = comicRes.data.results[0];
       setComic(comic);

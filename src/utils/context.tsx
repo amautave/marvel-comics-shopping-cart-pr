@@ -1,5 +1,6 @@
 import { IComic } from "@/interfaces/comics";
 import { createContext, useState } from "react";
+import { showErrorToast } from "./toast";
 
 interface ContextI {
   addCartItem: (comic: IComic) => void;
@@ -19,6 +20,7 @@ export function ContextProvider({ children }: ContextProps) {
   function addCartItem(comic: IComic) {
     const inCartComic = comics.find((cartComic) => cartComic.id === comic.id);
     if (!inCartComic) setComics([...comics, comic]);
+    else showErrorToast("Item already in cart");
   }
   function getCartItems(): IComic[] {
     return structuredClone(comics);

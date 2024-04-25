@@ -24,7 +24,6 @@ export interface FetchOptionsI {
 }
 
 function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
-  console.log("processEnv", process.env);
   const clientSide = typeof window != "undefined";
   const privateKey =
     (clientSide
@@ -42,23 +41,21 @@ function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
     apikey: publicKey,
     hash: hash,
   };
-  const url = new URL(`${process.env.URL}/${partialUrl}`);
+  const envUrl = clientSide ? process.env.NEXT_PUBLIC_URL : process.env.URL;
+  const url = new URL(`${envUrl}/${partialUrl}`);
   const searchOptions: FetchOptionsI = { ...defaults, ...options };
 
   url.search = new URLSearchParams(
-    searchOptions as Record<string, string>,
+    searchOptions as Record<string, string>
   ).toString();
-
-  // console.log({ url: url.toString() });
 
   return fetch(url.toString());
 }
 
 export default async function marvelFetch<T>(
   partialUrl: string,
-  options: FetchOptionsI = {},
+  options: FetchOptionsI = {}
 ): Promise<MarvelApiResponse<T>> {
-  console.log("marvelFetch", { partialUrl, options });
   return fetchMarvelAPI(partialUrl, options)
     .then((response) => response.json())
     .then((jsonResponse: any) => {

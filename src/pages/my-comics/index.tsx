@@ -11,7 +11,9 @@ export async function getServerSideProps() {
   const savedComicsIdsRes = await fetch(
     "http://localhost:3000/api/my-purchases"
   );
-  const comicsRes = await marvelFetch<IComic>("comics");
+  const comicsRes = await marvelFetch<IComic>("comics", {
+    dateDescriptor: "thisMonth",
+  });
   const comics: IComic[] = comicsRes.data.results;
   const savedComicsResponse = await savedComicsIdsRes.json();
   const savedComics: SavedComic[] = savedComicsResponse.data.comics;

@@ -2,6 +2,8 @@ import { useContext } from "react";
 import { CartItem } from "../cart-item/cart-item";
 import { Context } from "@/utils/context";
 import { IComic } from "@/interfaces/comics";
+import { showSuccessToast } from "@/utils/toast";
+import { useRouter } from "next/navigation";
 
 interface SidebarProps {
   isVisible: boolean;
@@ -11,6 +13,7 @@ interface SidebarProps {
 export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
   const context = useContext(Context);
   const items = context.getCartItems();
+  const router = useRouter();
 
   async function buyItems(items: IComic[]) {
     const itemsIds = items.map((item) => item.id.toString());
@@ -25,6 +28,8 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
 
     if (rawResponse.status === 200) {
       context.deleteCartItems();
+      setTimeout(() => router.push("/my-comics"), 4000);
+      showSuccessToast("Items are yours now :)");
     }
   }
   return (

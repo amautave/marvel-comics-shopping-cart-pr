@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import { clearInterval, setInterval } from "timers";
 
-const images = [
+const imgs = [
   {
     src: "/sprites/thor.png",
     alt: "thor-space",
@@ -11,25 +11,48 @@ const images = [
     src: "/sprites/hulk.png",
     alt: "hulk-sprite",
   },
+  {
+    src: "/sprites/cap.png",
+    alt: "cap-sprite",
+  },
+  {
+    src: "/sprites/iron-man.png",
+    alt: "iron-man-sprite",
+  },
+  {
+    src: "/sprites/spider-man.png",
+    alt: "spider-man-sprite",
+  },
+  {
+    src: "/sprites/wolverine.png",
+    alt: "wolverine-sprite",
+  },
 ];
 export function Loader() {
-  const [imageIndex, setImageIndex] = useState(0);
+  const images = imgs.map((img) => (
+    <Image src={img.src} alt={img.alt} height={100} width={100} key={img.alt} />
+  ));
+
+  const [imageIndex, setImageIndex] = useState(
+    Math.floor(Math.random() * images.length)
+  );
 
   useEffect(() => {
-    const interval = setInterval(
-      () => setImageIndex((imageIndex + 1) % 2),
-      500,
-    );
+    function changeInRangeImageIndex() {
+      let index = Math.floor(Math.random() * images.length);
+      if (imageIndex === index) index = imageIndex + 1;
+      setImageIndex(index);
+    }
+
+    const interval = setInterval(() => changeInRangeImageIndex(), 1000);
 
     return () => clearInterval(interval);
   }, [imageIndex]);
 
   return (
-    <Image
-      src={images[imageIndex].src}
-      alt={images[imageIndex].alt}
-      height={100}
-      width={100}
-    />
+    <>
+      {images[imageIndex]}
+      <h1 className="text-3xl"> Loading </h1>
+    </>
   );
 }
