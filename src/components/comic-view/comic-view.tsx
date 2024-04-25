@@ -1,6 +1,7 @@
+"use client";
 import { IComic } from "@/interfaces/comics";
 import { Context } from "@/utils/context";
-import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
+import { MarvelApiResponse } from "@/utils/marvelFetch";
 import Image from "next/image";
 import { useContext, useEffect, useState } from "react";
 import { Loader } from "../loader/loader";
@@ -14,16 +15,13 @@ export default function ComicView({ id }: ComicViewProps) {
 
   useEffect(() => {
     const fetchData = async () => {
-      // Fetch data from external API
-      const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-        `comics/${id}`
-      );
-      const comic = comicRes.data.results[0];
-      setComic(comic);
-    };
+      const comicsRes = await fetch(`/api/comics/${id}`);
+      const comics: MarvelApiResponse<IComic> = await comicsRes.json();
 
+      setComic(comics.data.results[0]);
+    };
     fetchData().catch((e) => {
-      console.log("error getting comic", e);
+      console.log("error getting comic in comic-view component", e);
     });
   }, [id]);
 
@@ -31,8 +29,6 @@ export default function ComicView({ id }: ComicViewProps) {
     context.addCartItem(comic);
     context.setSidebarVisibility(true);
   };
-
-  console.log({ comic });
 
   if (!comic) {
     return <Loader />;
