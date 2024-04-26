@@ -42,7 +42,7 @@ export const getStaticProps = (async (context: any) => {
     );
     comic = comicRes.data.results[0];
   } catch (e) {
-    console.log("error getting comic", e);
+    console.log("error getting comic in comic static page", e);
     return {
       notFound: true,
     };

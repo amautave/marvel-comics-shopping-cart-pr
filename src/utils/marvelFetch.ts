@@ -1,5 +1,10 @@
 import md5 from "md5";
 
+export interface MarvelApiError {
+  error: any;
+  message: string;
+}
+
 export interface MarvelApiResponse<T> {
   code: number;
   status: string;
@@ -46,7 +51,7 @@ function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
   const searchOptions: FetchOptionsI = { ...defaults, ...options };
 
   url.search = new URLSearchParams(
-    searchOptions as Record<string, string>
+    searchOptions as Record<string, string>,
   ).toString();
 
   return fetch(url.toString());
@@ -54,7 +59,7 @@ function fetchMarvelAPI(partialUrl: string, options: FetchOptionsI) {
 
 export default async function marvelFetch<T>(
   partialUrl: string,
-  options: FetchOptionsI = {}
+  options: FetchOptionsI = {},
 ): Promise<MarvelApiResponse<T>> {
   return fetchMarvelAPI(partialUrl, options)
     .then((response) => response.json())
@@ -63,6 +68,7 @@ export default async function marvelFetch<T>(
       if (!jsonResponse.data || !jsonResponse.data.results) {
         throw new Error("Invalid or unexpected Marvel API response format");
       }
+      // TODO: We should return just data from the repsonse
       return jsonResponse as MarvelApiResponse<T>;
     });
 }
