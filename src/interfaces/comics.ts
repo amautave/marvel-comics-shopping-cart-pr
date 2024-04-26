@@ -16,7 +16,7 @@ interface IComicImage {
 interface IComicTextObject {
   type: string;
   language: string;
-  text: string;
+  text?: string;
 }
 
 interface IComicCreators {
@@ -36,14 +36,14 @@ interface IComicDate {
   date: string;
 }
 
-export interface ComicI {
+export interface IComic {
   id: number;
   title: string;
-  prices: IComicPrice[];
+  prices?: IComicPrice[];
   thumbnail: IComicThumbnail;
-  images: IComicImage[];
+  images?: IComicImage[];
   resourceURI: string;
-  textObjects: IComicTextObject[];
-  creators: IComicCreatorsInfo;
+  textObjects?: IComicTextObject[];
+  creators?: IComicCreatorsInfo;
   dates: IComicDate[];
 }

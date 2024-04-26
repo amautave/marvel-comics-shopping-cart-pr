@@ -2,26 +2,26 @@ import { ComicCard } from "@/components/comic-card/comic-card";
 import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
+import { useEffect, useState } from "react";
 
-export const getServerSideProps = (async () => {
-  const comicsRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-    "comics",
-    {
-      // titleStartsWith: "Ant-Man",
-      // startYear: 2024,
-      dateDescriptor: "thisMonth",
-    }
-  );
+export default function Page() {
+  const [comics, setComics] = useState<IComic[]>([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      const comicsRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
+        "comics",
+        {
+          dateDescriptor: "thisMonth",
+        }
+      );
 
-  // Pass data to the page via props
-  return { props: { comics: comicsRes.data.results } };
+      setComics(comicsRes.data.results);
+    };
+    fetchData().catch((e) => {
+      console.log("error getting comics", e);
+    });
+  }, []);
 
-  // TODO: Handle API errors 400, 500
-}) satisfies GetServerSideProps<{ comics: IComic[] }>;
-
-export default function Page({
-  comics,
-}: InferGetServerSidePropsType<typeof getServerSideProps>) {
   return (
     <main className="grid grid-cols-5 ml-[150px]  justify-evenly gap-y-12 mt-[100px]">
       {comics
