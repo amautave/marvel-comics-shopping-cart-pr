@@ -48,7 +48,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Navbar />
             <Component {...pageProps} />
           </div>
-          {loading && (
+          {false && (
             <div className="fixed z-20 w-full h-full backdrop-blur-lg opacity-90 bg-black text-lg text-white">
               <div className="w-full h-full flex items-center justify-center flex-col">
                 <Loader />
