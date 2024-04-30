@@ -10,13 +10,13 @@ interface ComicCadProps {
 
 export function ComicCard({ id, src, alt, name }: ComicCadProps) {
   return (
-    <div className="relative h-[310px] w-[200px]">
+    <div className="relative sm:h-[310px] sm:w-[200px] w-[350px] h-[500px]">
       <Image
         src={src}
         alt={alt}
         width={200}
         height={200}
-        className="absolute object-cover max-h-[310px] h-full"
+        className="absolute object-cover w-full h-full sm:max-h-[310px] "
       />
       <div className="absolute z-10 bg-black opacity-0 hover:opacity-90 h-full w-full">
         <div className="absolute top-0 w-full p-4 flex justify-around">

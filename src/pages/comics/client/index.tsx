@@ -11,6 +11,7 @@ export default function Page() {
       const comicsRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
         "comics",
         {
+          limit: 100,
           dateDescriptor: "thisMonth",
         }
       );
@@ -23,18 +24,20 @@ export default function Page() {
   }, []);
 
   return (
-    <main className="grid grid-cols-5 ml-[150px]  justify-evenly gap-y-12 mt-[100px]">
-      {comics
-        .filter((comic) => comic.images && comic.images[0])
-        .map((comic: IComic) => (
-          <ComicCard
-            key={comic.id}
-            id={comic.id}
-            name={comic.title}
-            src={comic.thumbnail.path + "." + comic.thumbnail.extension}
-            alt={comic.id.toString()}
-          />
-        ))}
+    <main className="flex w-full items-center mt-[100px] justify-center">
+      <div className="grid grid-cols-auto-fill-150 gap-12 gap-x-24 mb-[100px] w-[85%]">
+        {comics
+          .filter((comic) => comic.images && comic.images[0])
+          .map((comic: IComic) => (
+            <ComicCard
+              key={comic.id}
+              id={comic.id}
+              name={comic.title}
+              src={comic.thumbnail.path + "." + comic.thumbnail.extension}
+              alt={comic.id.toString()}
+            />
+          ))}
+      </div>
     </main>
   );
 }

@@ -15,18 +15,19 @@ export default function Navbar() {
         isVisible={context.getSidebarVisibility()}
         toggleVisibility={() => context.toggleSidebarVisibility()}
       />
-      <nav className="flex h-16 mt-[80px] w-screen items-center justify-between">
-        <div className=" ml-[150px] mr-[150px] flex items-center w-screen justify-between">
-          <div className="flex items-center space-x-[150px]">
+      <nav className="flex h-16 mt-[80px] w-screen items-center justify-center">
+        <div className="w-[85%] flex items-center w-screen justify-between flex-col sm:flex-row">
+          <div className="flex items-center space-x-[150px] flex-col sm:flex-row ">
             <Link href={"/comics"}>
               <Image
+                className="min-w-[100px]"
                 width={100}
                 height={10}
                 src="/marvel-logo.png"
                 alt="logo"
               />
             </Link>
-            <div className="space-x-8 tex-lg">
+            <div className="self-center flex space-x-8 tex-lg flex-col sm:flex-row gap-y-4">
               <Link
                 className={`${
                   router.pathname.includes("/comics") && "bg-gray-900"

@@ -45,8 +45,8 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       <ToastContainer />
       <ContextProvider>
-        <div className="h-full">
-          <div className="absolute h-full">
+        <div className="h-full w-full">
+          <div className="absolute h-full w-full">
             <Navbar />
             <Component {...pageProps} />
           </div>
