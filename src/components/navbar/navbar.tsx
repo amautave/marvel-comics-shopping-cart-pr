@@ -15,9 +15,9 @@ export default function Navbar() {
         isVisible={context.getSidebarVisibility()}
         toggleVisibility={() => context.toggleSidebarVisibility()}
       />
-      <nav className="flex h-16 mt-[80px] w-screen items-center justify-center">
-        <div className="w-[85%] flex items-center w-screen justify-between flex-col sm:flex-row">
-          <div className="flex items-center space-x-[150px] flex-col sm:flex-row ">
+      <nav className="flex h-fit mt-[80px] w-screen items-center justify-center">
+        <div className="w-[85%] flex items-center justify-between flex-col sm:flex-row">
+          <div className="flex items-center justify-center sm:space-x-[150px] flex-col sm:flex-row ">
             <Link href={"/comics"}>
               <Image
                 className="min-w-[100px]"
@@ -27,7 +27,7 @@ export default function Navbar() {
                 alt="logo"
               />
             </Link>
-            <div className="self-center flex space-x-8 tex-lg flex-col sm:flex-row gap-y-4">
+            <div className="justify-center items-center flex sm:space-x-8 tex-lg flex-col sm:flex-row gap-y-4">
               <Link
                 className={`${
                   router.pathname === "/comics" && "bg-gray-900"
@@ -46,17 +46,17 @@ export default function Navbar() {
               >
                 Comics CSR
               </Link>
-              <Link
+              {/* <Link
                 href="/my-comics"
                 className={`${
                   router.pathname === "/my-comics" && "bg-gray-900"
                 } text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 font-medium`}
               >
                 My comics
-              </Link>
+              </Link> */}
             </div>
           </div>
-          <div
+          {/* <div
             className="cursor-pointer text-white"
             onClick={() => context.toggleSidebarVisibility()}
           >
@@ -72,7 +72,7 @@ export default function Navbar() {
                 </span>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </nav>
     </>
