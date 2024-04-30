@@ -29,12 +29,21 @@ export default function Navbar() {
             <div className="space-x-8 tex-lg">
               <Link
                 className={`${
-                  router.pathname.includes("/comics") && "bg-gray-900"
+                  router.pathname === "/comics" && "bg-gray-900"
                 } text-white rounded-md px-3 py-2 font-medium`}
                 aria-current="page"
                 href="/comics"
               >
-                Comics
+                Comics SSR
+              </Link>
+              <Link
+                className={`${
+                  router.pathname === "/comics/client" && "bg-gray-900"
+                } text-white rounded-md px-3 py-2 font-medium`}
+                aria-current="page"
+                href="/comics/client"
+              >
+                Comics CSR
               </Link>
               <Link
                 href="/my-comics"

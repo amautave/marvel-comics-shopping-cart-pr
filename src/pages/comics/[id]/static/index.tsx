@@ -1,6 +1,6 @@
 import { IComic } from "@/interfaces/comics";
 import { Context } from "@/utils/context";
-import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
+import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import type {
   GetStaticPaths,
   GetStaticProps,
@@ -10,16 +10,13 @@ import Image from "next/image";
 import { useContext } from "react";
 
 export const getStaticPaths = (async () => {
-  const comicsRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-    "comics",
-    {
-      // titleStartsWith: "Ant-Man",
-      // startYear: 2024,
-      dateDescriptor: "thisMonth",
-      limit: 10,
-    },
-  );
-  const comics = comicsRes.data.results;
+  const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics", {
+    // titleStartsWith: "Ant-Man",
+    // startYear: 2024,
+    dateDescriptor: "thisMonth",
+    limit: 10,
+  });
+  const comics = comicsData.results;
   const paths = comics
     // TODO: Remove this validations to get errors and handle the scenario when error page is pregenerated
     .filter((comic: IComic) => comic.id && comic.images && comic.images[0])
@@ -37,10 +34,10 @@ export const getStaticProps = (async (context: any) => {
   let comic: IComic;
   try {
     // Fetch data from external API
-    const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
+    const comicsRes: MarvelData<IComic> = await marvelFetch<IComic>(
       `comics/${context.params.id}`,
     );
-    comic = comicRes.data.results[0];
+    comic = comicsRes.results[0];
   } catch (e) {
     console.log("error getting comic in comic static page", e);
     return {
@@ -73,7 +70,7 @@ export default function Page({
   return (
     <main className="">
       <div className="flex items-end justify-between ml-[150px] mr-[150px] grow h-[600px] mt-[150px]">
-        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between max-w-[700px]">
+        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between">
           <h1 className="font-bold text-6xl max-w-[700px]">{comic.title}</h1>
           <div className="text-sm text-gray-400">
             {comic.creators?.items.map((creator) => (

@@ -1,6 +1,6 @@
 import { ComicCard } from "@/components/comic-card/comic-card";
 import { IComic } from "@/interfaces/comics";
-import marvelFetch from "@/utils/marvelFetch";
+import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 
 interface SavedComic {
   id: string;
@@ -9,16 +9,16 @@ interface SavedComic {
 
 export async function getServerSideProps() {
   const savedComicsIdsRes = await fetch(
-    "http://localhost:3000/api/my-purchases"
+    "http://localhost:3000/api/my-purchases",
   );
-  const comicsRes = await marvelFetch<IComic>("comics", {
+  const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics", {
     dateDescriptor: "thisMonth",
   });
-  const comics: IComic[] = comicsRes.data.results;
+  const comics: IComic[] = comicsData.results;
   const savedComicsResponse = await savedComicsIdsRes.json();
   const savedComics: SavedComic[] = savedComicsResponse.data.comics;
   const purchases = savedComics.map((savedComic) =>
-    comics.find((comic) => comic.id.toString() === savedComic.id)
+    comics.find((comic) => comic.id.toString() === savedComic.id),
   );
   return { props: { comics: purchases } };
 }
