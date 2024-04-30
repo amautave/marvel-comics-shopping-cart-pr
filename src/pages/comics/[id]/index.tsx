@@ -1,18 +1,18 @@
 import { IComic } from "@/interfaces/comics";
 import { Context } from "@/utils/context";
-import marvelFetch, { MarvelApiResponse } from "@/utils/marvelFetch";
+import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
 import { useContext } from "react";
 
 export const getServerSideProps = (async (context: any) => {
   // Fetch data from external API
-  const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
+  const comicsData: MarvelData<IComic> = await marvelFetch<IComic>(
     `comics/${context.params.id}`,
   );
 
   // Pass data to the page via props
-  return { props: { comic: comicRes.data.results[0] } };
+  return { props: { comic: comicsData.results[0] } };
 }) satisfies GetServerSideProps<{ comic: IComic }>;
 
 export default function Page({
@@ -28,7 +28,7 @@ export default function Page({
   return (
     <main className="">
       <div className="flex items-end justify-between ml-[150px] mr-[150px] grow h-[600px] mt-[150px]">
-        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between max-w-[700px]">
+        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between">
           <h1 className="font-bold text-6xl max-w-[700px]">{comic.title}</h1>
           <div className="text-sm text-gray-400">
             {comic.creators?.items.map((creator) => (
