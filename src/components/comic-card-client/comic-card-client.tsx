@@ -1,5 +1,4 @@
 import Image from "next/image";
-import Link from "next/link";
 
 interface ComicCadProps {
   id: number;
@@ -8,12 +7,8 @@ interface ComicCadProps {
   name: string;
 }
 
-export function ComicCardClient({ id, src, alt, name }: ComicCadProps) {
+export function ComicCardClient({ src, alt, name }: ComicCadProps) {
   return (
-    <Link
-      className="font-medium text-sm text-white dark:text-blue-500 hover:underline"
-      href={`/comics/${id}`}
-    >
       <div className="relative sm:h-[310px] sm:w-[200px] w-[350px] h-[500px]">
         <Image
           src={src}
@@ -28,6 +23,5 @@ export function ComicCardClient({ id, src, alt, name }: ComicCadProps) {
           </span>
         </div>
       </div>
-    </Link>
   );
 }

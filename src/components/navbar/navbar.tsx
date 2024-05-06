@@ -15,7 +15,7 @@ export default function Navbar() {
         isVisible={context.getSidebarVisibility()}
         toggleVisibility={() => context.toggleSidebarVisibility()}
       />
-      <nav className="flex h-fit mt-[80px] w-screen items-center justify-center">
+      <nav className="flex h-fit pt-[80px] items-center justify-center">
         <div className="w-[85%] flex items-center justify-between flex-col sm:flex-row">
           <div className="flex items-center justify-center sm:space-x-[150px] flex-col sm:flex-row ">
             <Link href={"/comics"}>
