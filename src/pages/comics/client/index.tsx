@@ -11,8 +11,10 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const comicsData: MarvelData<IComic> =
-        await marvelFetch<IComic>("comics");
+      const comicsData: MarvelData<IComic> = await marvelFetch<IComic>(
+        "comics",
+        { limit: 100 },
+      );
 
       setComics(comicsData.results);
     };
