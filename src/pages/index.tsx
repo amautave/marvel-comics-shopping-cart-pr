@@ -51,7 +51,7 @@ export default function Home() {
         priority
       />
       <div className="flex flex-col text-center opacity-100">
-        <h1 className="fond-bold text-3xl">NextJS Marvel Demo</h1>
+        <h1 className="fond-bold text-3xl">NextJS Marvel Comic List</h1>
         <h3 className="text-xl">Server Side Rendering</h3>
         <h3 className="text-xl">Client Side Rendering</h3>
       </div>
