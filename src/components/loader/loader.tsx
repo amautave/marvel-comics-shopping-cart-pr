@@ -30,7 +30,7 @@ const imgs = [
 ];
 
 interface LoaderProps {
-  text: string;
+  text?: string;
 }
 
 export function Loader({ text = "Loading" }: LoaderProps) {
