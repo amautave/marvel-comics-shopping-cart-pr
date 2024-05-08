@@ -2,13 +2,13 @@ import { Loader } from "@/components/loader/loader";
 import Navbar from "@/components/navbar/navbar";
 import "@/styles/globals.css";
 import { ContextProvider } from "@/utils/context";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import type { AppProps } from "next/app";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import { Analytics } from "@vercel/analytics/react";
 
 export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
@@ -17,7 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   useEffect(() => {
     const handleStart = (url: string) =>
       url !== router.asPath && setLoading(true);
-    const handleComplete = (url: string) => setLoading(false);
+    const handleComplete = () => setLoading(false);
 
     router.events.on("routeChangeStart", handleStart);
     router.events.on("routeChangeComplete", handleComplete);
@@ -50,7 +50,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Navbar />
             <Component {...pageProps} />
           </div>
-          {false && (
+          {loading && (
             <div className="fixed z-20 w-full h-full backdrop-blur-lg opacity-90 bg-black text-lg text-white">
               <div className="w-full h-full flex items-center justify-center flex-col">
                 <Loader />

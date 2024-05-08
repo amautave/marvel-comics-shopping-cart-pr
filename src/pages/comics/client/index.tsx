@@ -11,12 +11,8 @@ export default function Page() {
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
-      const comicsData: MarvelData<IComic> = await marvelFetch<IComic>(
-        "comics",
-        {
-          dateDescriptor: "lastWeek",
-        }
-      );
+      const comicsData: MarvelData<IComic> =
+        await marvelFetch<IComic>("comics");
 
       setComics(comicsData.results);
     };
@@ -29,7 +25,7 @@ export default function Page() {
     return (
       <div className="fixed z-20 w-full h-full backdrop-blur-lg opacity-90 bg-black text-lg text-white">
         <div className="w-full h-full flex items-center justify-center flex-col">
-          <Loader />
+          <Loader text="CSR Loader" />
         </div>
       </div>
     );

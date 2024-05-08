@@ -4,11 +4,7 @@ import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = (async () => {
-  const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics", {
-    // titleStartsWith: "Ant-Man",
-    // startYear: 2024,
-    dateDescriptor: "thisMonth",
-  });
+  const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics");
 
   // Pass data to the page via props
   return { props: { comics: comicsData.results } };

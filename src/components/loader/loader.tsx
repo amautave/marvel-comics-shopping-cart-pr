@@ -28,7 +28,12 @@ const imgs = [
     alt: "wolverine-sprite",
   },
 ];
-export function Loader() {
+
+interface LoaderProps {
+  text: string;
+}
+
+export function Loader({ text = "Loading" }: LoaderProps) {
   const images = imgs.map((img) => (
     <Image src={img.src} alt={img.alt} height={100} width={100} key={img.alt} />
   ));
@@ -52,7 +57,7 @@ export function Loader() {
   return (
     <>
       {images[imageIndex]}
-      <h1 className="text-3xl"> Loading </h1>
+      <h1 className="text-3xl"> {text} </h1>
     </>
   );
 }
