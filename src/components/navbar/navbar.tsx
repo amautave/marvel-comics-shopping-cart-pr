@@ -18,7 +18,7 @@ export default function Navbar() {
       <nav className="flex h-fit pt-[80px] items-center justify-center">
         <div className="w-[85%] flex items-center justify-between flex-col sm:flex-row">
           <div className="flex items-center justify-center sm:space-x-[150px] flex-col sm:flex-row ">
-            <Link href={"/comics"}>
+            <Link href={"/"}>
               <Image
                 className="min-w-[100px]"
                 width={100}
