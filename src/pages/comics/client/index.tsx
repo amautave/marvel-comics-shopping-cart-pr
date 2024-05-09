@@ -1,5 +1,4 @@
 import { ComicCardClient } from "@/components/comic-card-client/comic-card-client";
-import { Loader } from "@/components/loader/loader";
 import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import { useEffect, useState } from "react";
