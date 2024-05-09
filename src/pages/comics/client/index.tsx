@@ -3,6 +3,8 @@ import { Loader } from "@/components/loader/loader";
 import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import { useEffect, useState } from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Page() {
   const [comics, setComics] = useState<IComic[]>([]);
@@ -25,11 +27,18 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div className="fixed z-20 w-full h-full backdrop-blur-lg opacity-90 bg-black text-lg text-white">
-        <div className="w-full h-full flex items-center justify-center flex-col">
-          <Loader text="CSR Loader" />
+      <main className="flex w-full items-center mt-[100px] justify-center">
+        <div className="grid grid-cols-auto-fill-150 gap-12 gap-x-24 mb-[100px] w-[85%]">
+          {Array.from({ length: 24 }, (_, i) => i + 1).map((key) => (
+            <div
+              key={key}
+              className="relative sm:h-[310px] sm:w-[200px] w-[350px] h-[500px]"
+            >
+              <Skeleton height="100%" enableAnimation />
+            </div>
+          ))}
         </div>
-      </div>
+      </main>
     );
   }
 
