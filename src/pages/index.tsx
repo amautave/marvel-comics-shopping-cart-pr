@@ -54,6 +54,8 @@ export default function Home() {
         <h1 className="fond-bold text-3xl">NextJS Marvel Comic List</h1>
         <h3 className="text-xl">Server Side Rendering</h3>
         <h3 className="text-xl">Client Side Rendering</h3>
+        <h3 className="text-xl">Statig Site Generation</h3>
+        <h3 className="text-xl">Incremental Site Regeneration</h3>
       </div>
     </main>
   );

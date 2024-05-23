@@ -1,8 +1,9 @@
-import { ComicCardClient } from "@/components/comic-card-client/comic-card-client";
-import { Loader } from "@/components/loader/loader";
+import { ComicCard } from "@/components/comic-card/comic-card";
 import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import { useEffect, useState } from "react";
+import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function Page() {
   const [comics, setComics] = useState<IComic[]>([]);
@@ -14,11 +15,13 @@ export default function Page() {
       const comicsData: MarvelData<IComic> = await marvelFetch<IComic>(
         "comics",
         {
-          dateDescriptor: "lastWeek",
-        }
+          dateDescriptor: "thisMonth",
+          limit: 10,
+        },
       );
 
       setComics(comicsData.results);
+      console.log(comicsData.results.map((comic) => comic.id).join(", "));
     };
     fetchData()
       .catch((e) => console.log("error getting comics", e))
@@ -27,11 +30,20 @@ export default function Page() {
 
   if (loading) {
     return (
-      <div className="fixed z-20 w-full h-full backdrop-blur-lg opacity-90 bg-black text-lg text-white">
-        <div className="w-full h-full flex items-center justify-center flex-col">
-          <Loader />
+      <main className="flex w-full items-center mt-[100px] justify-center">
+        <div className="grid grid-cols-auto-fill-150 gap-12 gap-x-24 mb-[100px] w-[85%]">
+          <SkeletonTheme baseColor="#202020" highlightColor="#444">
+            {Array.from({ length: 24 }, (_, i) => i + 1).map((key) => (
+              <div
+                key={key}
+                className="relative sm:h-[310px] sm:w-[200px] w-[350px] h-[500px]"
+              >
+                <Skeleton height="100%" enableAnimation />
+              </div>
+            ))}
+          </SkeletonTheme>
         </div>
-      </div>
+      </main>
     );
   }
 
@@ -41,7 +53,7 @@ export default function Page() {
         {comics
           .filter((comic) => comic.images && comic.images[0])
           .map((comic: IComic) => (
-            <ComicCardClient
+            <ComicCard
               key={comic.id}
               id={comic.id}
               name={comic.title}

@@ -1,8 +1,7 @@
 import { IComic } from "@/interfaces/comics";
-import { Context } from "@/utils/context";
-import { MarvelApiResponse } from "@/utils/marvelFetch";
+import { MarvelData } from "@/utils/marvelFetch";
 import Image from "next/image";
-import { useContext, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Loader } from "../loader/loader";
 
 interface ComicViewProps {
@@ -10,24 +9,18 @@ interface ComicViewProps {
 }
 export default function ComicView({ id }: ComicViewProps) {
   const [comic, setComic] = useState<IComic>();
-  const context = useContext(Context);
 
   useEffect(() => {
     const fetchData = async () => {
       const comicsRes = await fetch(`/api/comics/${id}`);
-      const comics: MarvelApiResponse<IComic> = await comicsRes.json();
+      const comicsData: MarvelData<IComic> = await comicsRes.json();
 
-      setComic(comics.data.results[0]);
+      setComic(comicsData.results[0]);
     };
     fetchData().catch((e) => {
       console.log("error getting comic in comic-view component", e);
     });
   }, [id]);
-
-  const addComicToCart = (comic: IComic) => {
-    context.addCartItem(comic);
-    context.setSidebarVisibility(true);
-  };
 
   if (!comic) {
     return <Loader />;
@@ -52,14 +45,7 @@ export default function ComicView({ id }: ComicViewProps) {
           <span className="text-5xl">
             ${comic.prices && comic.prices[0].price}
           </span>
-          <div className="flex flex-col  self-end gap-y-[20px]">
-            <button
-              className="w-[200px] h-[50px] bg-white text-black hover:bg-gray-200"
-              onClick={() => addComicToCart(comic)}
-            >
-              Add to cart
-            </button>
-          </div>
+          <div className="flex flex-col  self-end gap-y-[20px]"></div>
         </div>
 
         <div className="w-fit">

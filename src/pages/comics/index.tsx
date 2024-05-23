@@ -1,13 +1,12 @@
-import { ComicCardClient } from "@/components/comic-card-client/comic-card-client";
+import { ComicCard } from "@/components/comic-card/comic-card";
 import { IComic } from "@/interfaces/comics";
 import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 
 export const getServerSideProps = (async () => {
   const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics", {
-    // titleStartsWith: "Ant-Man",
-    // startYear: 2024,
     dateDescriptor: "thisMonth",
+    limit: 10,
   });
 
   // Pass data to the page via props
@@ -25,7 +24,7 @@ export default function Page({
         {comics
           .filter((comic) => comic.images && comic.images[0])
           .map((comic: IComic) => (
-            <ComicCardClient
+            <ComicCard
               key={comic.id}
               id={comic.id}
               name={comic.title}

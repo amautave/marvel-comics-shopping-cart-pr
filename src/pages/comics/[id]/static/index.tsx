@@ -1,5 +1,4 @@
 import { IComic } from "@/interfaces/comics";
-import { Context } from "@/utils/context";
 import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import type {
   GetStaticPaths,
@@ -7,12 +6,10 @@ import type {
   InferGetStaticPropsType,
 } from "next";
 import Image from "next/image";
-import { useContext } from "react";
+// import { useRouter } from 'next/router'
 
 export const getStaticPaths = (async () => {
   const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics", {
-    // titleStartsWith: "Ant-Man",
-    // startYear: 2024,
     dateDescriptor: "thisMonth",
     limit: 10,
   });
@@ -26,7 +23,9 @@ export const getStaticPaths = (async () => {
 
   return {
     paths,
-    fallback: "blocking", // true, false or "blocking"
+    // fallback: false, // Render 404 page
+    // fallback: true, // render a fallback view and regenerates when navigating to it
+    fallback: "blocking", // block when no static page was generated and SSR it
   };
 }) satisfies GetStaticPaths;
 
@@ -35,7 +34,7 @@ export const getStaticProps = (async (context: any) => {
   try {
     // Fetch data from external API
     const comicsRes: MarvelData<IComic> = await marvelFetch<IComic>(
-      `comics/${context.params.id}`,
+      `comics/${context.params.id}`
     );
     comic = comicsRes.results[0];
   } catch (e) {
@@ -61,11 +60,13 @@ export const getStaticProps = (async (context: any) => {
 export default function Page({
   comic,
 }: InferGetStaticPropsType<typeof getStaticProps>) {
-  const context = useContext(Context);
-  const addComicToCart = (comic: IComic) => {
-    context.addCartItem(comic);
-    context.setSidebarVisibility(true);
-  };
+  // const router = useRouter();
+
+  // // If the page is not yet generated, this will be displayed
+  // // initially until getStaticProps() finishes running
+  // if (router.isFallback) {
+  //   return <div>Loading...</div>;
+  // }
 
   return (
     <main className="">
@@ -86,14 +87,7 @@ export default function Page({
           <span className="text-5xl">
             ${comic.prices && comic.prices[0].price}
           </span>
-          <div className="flex flex-col  self-end gap-y-[20px]">
-            <button
-              className="w-[200px] h-[50px] bg-white text-black hover:bg-gray-200"
-              onClick={() => addComicToCart(comic)}
-            >
-              Add to cart
-            </button>
-          </div>
+          <div className="flex flex-col  self-end gap-y-[20px]"></div>
         </div>
 
         <div className="w-fit">

@@ -10,7 +10,7 @@ interface ComicCadProps {
 
 export function ComicCard({ id, src, alt, name }: ComicCadProps) {
   return (
-    <div className="relative sm:h-[310px] sm:w-[200px] w-[350px] h-[500px]">
+    <div className="relative sm:h-[310px] sm:w-[200px] w-[350px] h-[500px] flex items-end justify-center">
       <Image
         src={src}
         alt={alt}
@@ -44,6 +44,7 @@ export function ComicCard({ id, src, alt, name }: ComicCadProps) {
           {name}
         </span>
       </div>
+      <span className="text-white font-bold z-10">{id}</span>
     </div>
   );
 }

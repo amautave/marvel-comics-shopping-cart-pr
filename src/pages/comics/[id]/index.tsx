@@ -1,9 +1,7 @@
 import { IComic } from "@/interfaces/comics";
-import { Context } from "@/utils/context";
 import marvelFetch, { MarvelData } from "@/utils/marvelFetch";
 import type { GetServerSideProps, InferGetServerSidePropsType } from "next";
 import Image from "next/image";
-import { useContext } from "react";
 
 export const getServerSideProps = (async (context: any) => {
   // Fetch data from external API
@@ -18,13 +16,6 @@ export const getServerSideProps = (async (context: any) => {
 export default function Page({
   comic,
 }: InferGetServerSidePropsType<typeof getServerSideProps>) {
-  const context = useContext(Context);
-
-  function addComicToCart(comic: IComic) {
-    context.addCartItem(comic);
-    context.setSidebarVisibility(true);
-  }
-
   return (
     <main className="">
       <div className="flex items-end justify-between ml-[150px] mr-[150px] grow h-[600px] mt-[150px]">
@@ -44,14 +35,7 @@ export default function Page({
           <span className="text-5xl">
             ${comic.prices && comic.prices[0].price}
           </span>
-          <div className="flex flex-col  self-end gap-y-[20px]">
-            <button
-              className="w-[200px] h-[50px] bg-white text-black hover:bg-gray-200"
-              onClick={() => addComicToCart(comic)}
-            >
-              Add to cart
-            </button>
-          </div>
+          <div className="flex flex-col self-end gap-y-[20px]"></div>
         </div>
 
         <div className="w-fit">

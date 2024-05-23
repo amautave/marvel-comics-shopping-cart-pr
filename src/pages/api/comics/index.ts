@@ -8,7 +8,9 @@ export default async function handler(
   res: NextApiResponse<MarvelData<IComic> | MarvelApiError>,
 ) {
   try {
-    const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics");
+    const comicsData: MarvelData<IComic> = await marvelFetch<IComic>("comics", {
+      limit: 100,
+    });
 
     res.status(200).json(comicsData);
   } catch (error) {
