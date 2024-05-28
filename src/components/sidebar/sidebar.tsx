@@ -4,6 +4,7 @@ import { Context } from "@/utils/context";
 import { IComic } from "@/interfaces/comics";
 import { showSuccessToast } from "@/utils/toast";
 import { useRouter } from "next/navigation";
+import { IComicPurchase } from "@/interfaces/purchases";
 
 interface SidebarProps {
   isVisible: boolean;
@@ -16,14 +17,20 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
   const router = useRouter();
 
   async function buyItems(items: IComic[]) {
-    const itemsIds = items.map((item) => item.id.toString());
+    const purchasedItems: IComicPurchase[] = items.map((item) => {
+      return {
+        id: item.id,
+        title: item.title,
+        src: item.thumbnail.path + "." + item.thumbnail.extension,
+      };
+    });
     const rawResponse = await fetch("http://localhost:3000/api/my-purchases/", {
       method: "POST",
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ ids: itemsIds }),
+      body: JSON.stringify({ purchases: purchasedItems }),
     });
 
     if (rawResponse.status === 200) {
