@@ -14,7 +14,7 @@ export function ComicCard({ id, src, alt, name, disabled }: ComicCadProps) {
     <div className={"relative h-[310px] w-[200px] "}>
       <Link
         className="font-medium text-sm text-white dark:text-blue-500 hover:underline"
-        href={disabled ? "" : `/comics/${id}/static`}
+        href={disabled ? "" : `/comics/${id}`}
       >
         <Image
           src={src}
