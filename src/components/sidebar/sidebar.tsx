@@ -35,7 +35,6 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
 
     if (rawResponse.status === 200) {
       context.deleteCartItems();
-      setTimeout(() => router.push("/my-comics"), 4000);
       showSuccessToast("Items are yours now :)");
     }
   }
@@ -45,7 +44,6 @@ export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
       className={`fixed top-0 right-0 z-20 w-[22vw] h-full pl-8 pr-5 pt-4 overflow-y-auto transition-transform bg-white dark:bg-gray-800 h-full ${
         !isVisible ? "translate-x-[22vw]" : ""
       }`}
-      // tabindex="-1"
       aria-labelledby="drawer-navigation-label"
     >
       <button
