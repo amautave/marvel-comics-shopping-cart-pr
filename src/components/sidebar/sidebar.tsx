@@ -3,7 +3,6 @@ import { CartItem } from "../cart-item/cart-item";
 import { Context } from "@/utils/context";
 import { IComic } from "@/interfaces/comics";
 import { showSuccessToast } from "@/utils/toast";
-import { useRouter } from "next/navigation";
 import { IComicPurchase } from "@/interfaces/purchases";
 
 interface SidebarProps {
@@ -14,7 +13,6 @@ interface SidebarProps {
 export function Sidebar({ isVisible, toggleVisibility }: SidebarProps) {
   const context = useContext(Context);
   const items = context.getCartItems();
-  const router = useRouter();
 
   async function buyItems(items: IComic[]) {
     const purchasedItems: IComicPurchase[] = items.map((item) => {
