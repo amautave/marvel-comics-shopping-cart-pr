@@ -10,9 +10,8 @@ import prisma from "@/lib/prisma";
 // }
 
 export async function getServerSideProps() {
-  const savedComics: IComicPurchase[] = (
-    await prisma.purchasedComics.findMany()
-  ).map((comic) => {
+  const purchases = await prisma.purchasedComics.findMany();
+  const savedComics: IComicPurchase[] = purchases.map((comic) => {
     return {
       ...comic,
       id: Number(comic.id),
