@@ -17,7 +17,7 @@ export const getStaticPaths = (async () => {
       // startYear: 2024,
       dateDescriptor: "thisMonth",
       limit: 10,
-    }
+    },
   );
   const comics = comicsRes.data.results;
   const paths = comics
@@ -38,7 +38,7 @@ export const getStaticProps = (async (context: any) => {
   try {
     // Fetch data from external API
     const comicRes: MarvelApiResponse<IComic> = await marvelFetch<IComic>(
-      `comics/${context.params.id}`
+      `comics/${context.params.id}`,
     );
     comic = comicRes.data.results[0];
   } catch (e) {
@@ -73,7 +73,7 @@ export default function Page({
   return (
     <main className="">
       <div className="flex items-end justify-between ml-[150px] mr-[150px] grow h-[600px] mt-[150px]">
-        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between">
+        <div className="text-white flex flex-col gap-10 max-w-[800px] self-center h-full items-start justify-between max-w-[700px]">
           <h1 className="font-bold text-6xl max-w-[700px]">{comic.title}</h1>
           <div className="text-sm text-gray-400">
             {comic.creators?.items.map((creator) => (
